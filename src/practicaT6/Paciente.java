@@ -10,40 +10,33 @@ import java.util.Scanner;
  */
 public class Paciente {
 	// Atributos
-	String DNI; // Variable para almacenar el DNI
-	String nombre; // Variable para almacenar nombre
-	int edad; // Variable para almacenar la edad
-	String calle; // Variable para almacenar la calle
-	String localidad; // Variable para almacenar la localidad
-	int cod_postal; // Variable para almacenar el código postal
+	String DNI = ""; // Variable para almacenar el DNI
+	String nombre = ""; // Variable para almacenar nombre
+	int edad = 0; // Variable para almacenar la edad
+	String calle = ""; // Variable para almacenar la calle
+	String localidad = ""; // Variable para almacenar la localidad
+	int cod_postal = 0; // Variable para almacenar el código postal
 	static int op; // Variable para la selección de las diferentes opciones
 	static Scanner sc = new Scanner(System.in); // Variable para escanear las diferentes opciones
-	static Scanner scPaciente = new Scanner(System.in); // Variable para escanear los datos del cliente
 
-	static String pacientes[];
 
-	
-
-	 
-	
 	/**
-	 * Constructor para el almacenamiento de los datos de clientes
 	 * 
-	 * @param D Almacena DNI
-	 * @param no Almacena nombre
-	 * @param ed Almacena edad
-	 * @param ca Almacena calle
-	 * @param lo Almacena localidad
-	 * @param cod Almacena código postal
+	 * @param DNI almacena el DNI
+	 * @param nombre almacena el nombre
+	 * @param edad almacena la edad
+	 * @param calle almacena la calle
+	 * @param localidad almacena la localidad
+	 * @param cod_postal almacena el código postal
 	 */
-	public Paciente(String D, String no, int ed, String ca, String lo, int cod) {
+	public Paciente(String DNI, String nombre, int edad, String calle, String localidad, int cod_postal) {
 		// Constructor
-		DNI = D; // Almacena DNI	
-		nombre = no; // Almacena nombre 
-		edad = ed; // Almacena edad 
-		calle = ca; // Almacena calle
-		localidad = lo; // Almacena localidad
-		cod_postal = cod; // Almacena código postal
+		this.DNI = DNI; // Almacena DNI	
+		this.nombre = nombre; // Almacena nombre 
+		this.edad = edad; // Almacena edad 
+		this.calle = calle; // Almacena calle
+		this.localidad = localidad; // Almacena localidad
+		this.cod_postal = cod_postal; // Almacena código postal
 	}
 	
 	
@@ -78,8 +71,40 @@ public class Paciente {
 		EscribeFichero.pw.println(paciente3.DNI+ "," + paciente3.nombre + "," + paciente3.edad + "," + paciente3.calle + "," + paciente3.localidad + "," + paciente3.cod_postal);
 	}
 	
+	/**
+	 * TODO Tengo que implementar la funcionalidad para que guarde los datos introducidos en el fichero
+	 */
 	public static void insertarPacientes() {
+
+		op = 0;
+		System.out.println("\nIntroduce el DNI del paciente: ");
+		String DNI = sc.next();
+//		EscribeFichero.pw.println(paciente[i].DNI);
 		
+		System.out.println("\nIntroduce el nombre del paciente: ");
+		String nombre = sc.next();
+//		EscribeFichero.pw.println(paciente[i].nombre);
+		
+		System.out.println("\nIntroduce la edad del paciente: ");
+		int edad = sc.nextInt();
+//		EscribeFichero.pw.println(paciente[i].edad);
+		
+		System.out.println("\nIntroduce la calle del paciente: ");
+		String calle = sc.next();
+//		EscribeFichero.pw.println(paciente[i].calle);
+		
+		System.out.println("\nIntroduce la localidad del paciente: ");
+		String localidad = sc.next();
+//		EscribeFichero.pw.println(paciente[i].localidad);
+		
+		System.out.println("\nIntroduce el codigo postal del paciente: ");
+		int cod_postal = sc.nextInt();
+//		EscribeFichero.pw.println(paciente[i].cod_postal);
+		
+		System.out.println(DNI + nombre + edad + calle + localidad + cod_postal);
+		menu();
+
+
 	}
 	
 	public static void menu() {
@@ -92,9 +117,19 @@ public class Paciente {
 			System.out.println("0. Salir");
 			System.out.println("");
 			op = sc.nextInt();
-			System.out.println("");
-			
-//			quiero introducir pacientes desde la clase scanner y almacenarlos en un array con leguaje java
+			if (op < 0 || op > 2) {
+				System.err.println("\nError: Opcion incorrecta");
+				System.err.println("Error: Vuelve a elegir la opcion");
+			}
+		}
+		switch (op) {
+		case 1:
+			System.out.println("Agregar cliente");
+			insertarPacientes();
+
+
+		default:
+			break;
 		}
 		
 		//sc.close();

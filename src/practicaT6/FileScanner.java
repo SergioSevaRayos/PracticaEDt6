@@ -5,6 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author Sergio Seva Rayos
+ * @version 1.0
+ *
+ */
 public class FileScanner {
 	public static void main(String[] args) {
 		String ruta = "C:/Users/sergi/git/PracticaEDt6/Pacientes.txt";

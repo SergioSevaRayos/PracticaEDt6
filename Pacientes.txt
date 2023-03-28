@@ -1,4 +1,3 @@
-DNI|NOMBRE|EDAD|CALLE|LOCALIDAD|COD. POSTAL|
 48640477y,Sergio Seva Rayos,34,Santa Pola 5,San Isidro,3349
 22222222r,Pepe Casi Llega,39,Aparicio 45,Callosa,3629
 45334333t,Juan Ade Arco,56,Real 23,Alicante,1389

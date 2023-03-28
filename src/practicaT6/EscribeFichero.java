@@ -11,11 +11,18 @@ opción de ejecución
  */
 
 // TODO 
+/**
+ * 
+ * @author Sergio Seva Rayos
+ * @version 1.0
+ *
+ */
 public class EscribeFichero {
+	static PrintWriter pw = null;
+	static String ruta = "C:/Users/sergi/git/PracticaEDt6/Pacientes.txt";
+	static FileWriter fichero = null;
+	
 	public static void main(String[] args) {
-		String ruta = "C:/Users/sergi/git/PracticaEDt6/Pacientes.txt";
-		FileWriter fichero = null;
-		PrintWriter pw = null;
 		try {
 			// Añadir flag a true para no machacar contenido del
 			fichero = new FileWriter(ruta, false);
@@ -27,15 +34,8 @@ public class EscribeFichero {
 //				pw.println("Coche " + i);
 //				
 //			}
-			pw.println("DNI|NOMBRE|EDAD|CALLE|LOCALIDAD|COD. POSTAL|");
-			Paciente paciente1 = new Paciente("48640477y","Sergio Seva Rayos",34,"Santa Pola 5","San Isidro",3349);
-			pw.println(paciente1.DNI+ "," + paciente1.nombre + "," + paciente1.edad + "," + paciente1.calle + "," + paciente1.localidad + "," + paciente1.cod_postal);
-			
-			Paciente paciente2 = new Paciente("22222222r","Pepe Casi Llega",39,"Aparicio 45","Callosa",3629);
-			pw.println(paciente2.DNI+ "," + paciente2.nombre + "," + paciente2.edad + "," + paciente2.calle + "," + paciente2.localidad + "," + paciente2.cod_postal);
-			
-			Paciente paciente3 = new Paciente("45334333t","Juan Ade Arco",56,"Real 23","Alicante",1389);
-			pw.println(paciente3.DNI+ "," + paciente3.nombre + "," + paciente3.edad + "," + paciente3.calle + "," + paciente3.localidad + "," + paciente3.cod_postal);
+			// Pacientes 
+			Paciente.pacientesDefecto();
 			//---------------------------------------------- Fin   
 			
 			

@@ -12,6 +12,13 @@ reservada Throws seguida
  * de las excepciones a capturar
  * 
  */
+
+/**
+ * 
+ * @author Sergio Seva Rayos
+ * @version 1.0
+ *
+ */
 public class LeerFichero {
 	public static void muestraContenido(String archivo) throws 
 	FileNotFoundException, IOException {

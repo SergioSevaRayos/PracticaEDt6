@@ -1,6 +1,6 @@
 package practicaT6;
 import java.io.FileWriter;
-import java.util.Scanner;
+import java.util.*;
 import java.io.PrintWriter;
 
 /*
@@ -11,7 +11,6 @@ opción de ejecución
  * obligatoria con la sentencia finally.
  */
 
-// TODO 
 /**
  * 
  * @author Sergio Seva Rayos
@@ -26,49 +25,90 @@ public class EscribeFichero {
 	//---------------------------------------------- Inicio 
 	static String DNI; // Variable para almacenar el DNI
 	static String nombre; // Variable para almacenar nombre
-	static int edad; // Variable para almacenar la edad
+	static String edad; // Variable para almacenar la edad
 	static String calle; // Variable para almacenar la calle
 	static String localidad; // Variable para almacenar la localidad
 	static int cod_postal; // Variable para almacenar el código postal
-	static int op; // Variable para la selección de las diferentes opciones
+	static int op = 0; // Variable para la selección de las diferentes opciones
 	static Scanner sc = new Scanner(System.in); // Variable para escanear las diferentes opciones
-	static boolean esEntero = false;
 
-	// TODO Configurar bucles para comprobar los datos introducidos
-	public static void insertarPacientes() {
-		op = 0;
-		System.out.println("\nIntroduce el DNI del paciente: ");
+
+	// TODO Configurar bucles para comprobar los datos introducidos. (Hacer un menú para seleccionar el dato a introducir)
+	
+	public static void inDNI() {
+		// Recolección del dato "DNI"
+		System.out.print("\nIntroduce el DNI del paciente: ");
 		DNI = sc.next();
 		
-		System.out.println("\nIntroduce el nombre del paciente: ");
-		nombre = sc.next();
-		
-		
+		if (DNI != null && DNI.matches("\\d{8}[A-Za-z]")) {
+			System.out.println("DNI correcto");
+			op = 1;
+			menu();
+		}else {
+			System.out.println("DNI incorrecto, vuelve a introducirlo");
+			inDNI();
+		}
+	}
+	
+	public static void inNombre() {
+		// Recolección del dato "nombre"
+		nombre = "sergio";
+		while (nombre != null || !nombre.matches("^[a-zA-Z ]+$")) {
+			System.out.println("\nIntroduce el nombre del paciente: ");
+			nombre = sc.nextLine();
+			if (nombre.matches("^[a-zA-Z ]+$")) {
+			    System.out.println("Nombre correcto");
+			    op = 1;
+			    menu();
+			} else {
+			    System.err.println("Nombre incorrecto, vuelve a introducirlo");
+			    inNombre();
+			}
+		}
+	}
+	
+	public static void inEdad() {
+		// Recolección del dato "edad"
+		System.out.println("\nIntroduce la edad del paciente: ");
+		edad = sc.next();
 
-		while (!esEntero) {
-            try {
-                System.out.print("Introduzca un número entero: ");
-                edad = sc.nextInt();
-                esEntero = true;
-            } catch (Exception e) {
-                System.out.println("El valor introducido es incorrecto. Por favor, inténtelo de nuevo.");
-                sc.next();  // Limpia buffer de entrada para evitar un bucle infinito
-            }
-        }
 		
+		if (edad != null && edad.matches("^[0-9]+$")) {
+			System.out.println("Edad correcta");
+			op = 1;
+			menu();
+		}else {
+			System.err.println("Edad incorrecta, vuelve a introducirla");
+			inEdad();
+		}
+
+	}
+
+	public static void inCalle() {
+		// Recolección del dato "calle"
 		System.out.println("\nIntroduce la calle del paciente: ");
-		calle = sc.next();
-		System.out.println("\nIntroduce la localidad del paciente: ");
-		localidad = sc.next();
-		System.out.println("\nIntroduce el cod_postal del paciente: ");
-		cod_postal = sc.nextInt();
-		
-		tryCatch();
+		calle = sc.nextLine();
 		menu();
 	}
 	
+	public static void inLocalidad() {
+		// Recolección del dato "localidad"
+		System.out.println("Introduce la localidad del paciente: ");
+		localidad = sc.nextLine();
+		menu();
+	}
+	
+	public static void inCodPostal() {
+		// Recolección del dato "cod_postal"
+		System.out.println("\nIntroduce el cod_postal del paciente: ");
+		cod_postal = sc.nextInt();
+		menu();
+	}
+
+
+	
 	public static void menu() {
-		while (op <= 0 || op >2 ) {
+		while (op <= 0 || op >2) {
 			System.out.println("\tMENU");
 			System.out.println("---------------------");
 			System.out.println("1. Agregar cliente");
@@ -84,15 +124,58 @@ public class EscribeFichero {
 		}
 		switch (op) {
 		case 1:
-			System.out.println("Agregar cliente");
-			insertarPacientes();
-			
-		default:
-			break;
+			op = 0;
+			while (op <= 0 || op >6 ) {
+				System.out.println("\tAgregar cliente");
+				System.out.println("---------------------");
+				System.out.println("1. DNI");
+				System.out.println("2. Nombre");
+				System.out.println("3. Edad");
+				System.out.println("4. Calle");
+				System.out.println("5. Localidad");
+				System.out.println("6. Codigo postal");
+				System.out.println("");
+				System.out.println("0. Salir");
+				System.out.println("");
+				if (op < 0 || op > 6) {
+					System.err.println("\nError: Opcion incorrecta");
+					System.err.println("Error: Vuelve a elegir la opcion");
+				}
+				op = sc.nextInt();
+				switch (op) {
+				case 0:
+					menu();
+					break;
+				case 1:
+					System.out.println("DNI");
+					inDNI();
+					break;
+				case 2:
+					System.out.println("Nombre");
+					inNombre();
+					break;
+				case 3:
+					System.out.println("Edad");
+					inEdad();
+					break;
+				case 4:
+					System.out.println("Calle");
+					inCalle();
+					break;
+				case 5:
+					System.out.println("Localidad");
+					inLocalidad();
+					break;
+				case 6:
+					System.out.println("Codigo postal");
+					inCodPostal();
+					break;
+				}
+			}
+
 		}
-		
-		//sc.close();
 	}
+	
 	public static void tryCatch() {
 		try {
 			// Añadir flag a true para no machacar contenido del
@@ -127,6 +210,11 @@ public class EscribeFichero {
 				}
 			}
 		}
+	}
+	
+	public String toString(String DNI, String nombre, int edad, String calle, String localidad, int cod_postal) {
+		//CANT.\tPRODUCTO\t PRECIO UD\tTOTAL\n
+		return DNI + "\t" +  nombre + "\t\t" + edad + "\t\t" + calle + "\t\t" + localidad + "\t\t" + cod_postal;
 	}
 
 	//---------------------------------------------- Fin 

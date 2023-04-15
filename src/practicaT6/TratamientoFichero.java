@@ -1,5 +1,10 @@
 package practicaT6;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -12,22 +17,22 @@ import java.text.SimpleDateFormat;
  * opción de ejecución obligatoria con la sentencia finally.
  */
 
-// TODO Tengo que configurar la forma de comprobar que la unicidad del "DNI"
-// TODO Tengo que crear la opción de visitas
-
 /**
  * 
  * @author Sergio Seva Rayos
  * @version 1.0
  *
  */
-public class EscribeFichero {
-	static PrintWriter pw = null;
+public class TratamientoFichero {
+	// Variables para leer los ficheros pacientes
 	static String rutaPac = "C:/Users/sergi/git/PracticaEDt6/Pacientes.txt";
 	static String rutaVis = "C:/Users/sergi/git/PracticaEDt6/Visitas.txt";
+	
+	// Variables para escribir en los ficheros
+	static PrintWriter pw = null;
 	static FileWriter fichero = null;
 	
-	//---------------------------------------------- Inicio 
+	
 	// Variables para gestionar los pacientes
 	static String DNI; // Variable para almacenar el DNI
 	static String nombre; // Variable para almacenar nombre
@@ -56,7 +61,7 @@ public class EscribeFichero {
 	// Variables generales
 	static int op = 0; // Variable para la selección de las diferentes opciones
 	static Scanner sc = new Scanner(System.in); // Variable para escanear las diferentes opciones
-	
+
 	/**
 	* Método para la introducción del dato "DNI", mediante este método nos aseguramos
 	* que los datos introducidos son correctos
@@ -64,12 +69,15 @@ public class EscribeFichero {
 	public static void inDNI() {
 		// Recolección del dato "DNI"
 		sc.nextLine(); // Limpiamos el buffer de entrada
+		System.out.println("FORMATO: El DNI contiene 8 caracteres numericos y uno alfabetico al final");
+		System.out.println("Ej. 99999999y");
 		System.out.print("\nIntroduce el DNI del paciente: ");
 		DNI = sc.nextLine();
 		
 		// Mediante esta sentencia comprobamos que el "DNI" tiene el formato correcto
 		if (DNI != null && DNI.matches("\\d{8}[A-Za-z]")) {
-			System.out.println("DNI correcto");
+			System.out.println("");
+			compruebaDNI();
 			menu();
 		}else {
 			System.out.print("DNI incorrecto, vuelve a introducirlo: ");
@@ -77,7 +85,7 @@ public class EscribeFichero {
 		}
 	}
 	
-	/**
+	 /**
 	 * Método para la introducción del dato "nombre", mediante este método nos aseguramos
 	 * que los datos introducidos son correctos
 	 */
@@ -85,6 +93,8 @@ public class EscribeFichero {
 		// Recolección del dato "nombre"
 		op = 1;
 		sc.nextLine(); // Limpiamos el buffer de entrada
+		System.out.println("FORMATO: El nombre consta de caracteres alfabeticos sin numeros ");
+		System.out.println("Ej. Pepe Ventana Armario");
 		System.out.println("\nIntroduce el nombre del paciente: ");
 		nombre = sc.nextLine();
 		
@@ -103,6 +113,8 @@ public class EscribeFichero {
 	public static void inEdad() {
 		// Recolección del dato "edad"
 		op = 1;
+		System.out.println("FORMATO: La edad se compone de caracteres numericos");
+		System.out.println("Ej. 34");
 		System.out.println("\nIntroduce la edad del paciente: ");
 		edad = sc.next();
 
@@ -123,6 +135,8 @@ public class EscribeFichero {
 	public static void inCalle() {
 		// Recolección del dato "calle"
 		op = 1;
+		System.out.println("FORMATO: La calle consta de caracteres alfanumericos");
+		System.out.println("Ej. Calle Santa Pola 4");
 		System.out.println("\nIntroduce la calle del paciente: ");
 		calle = sc.nextLine();
 		
@@ -142,6 +156,8 @@ public class EscribeFichero {
 	public static void inLocalidad() {
 		// Recolección del dato "localidad"
 		op = 1;
+		System.out.println("FORMATO: El nombre consta de caracteres alfabeticos sin numeros ");
+		System.out.println("Ej. Lorca");
 		System.out.println("Introduce la localidad del paciente: ");
 		localidad = sc.nextLine();
 		
@@ -161,6 +177,8 @@ public class EscribeFichero {
 	public static void inCodPostal() {
 		// Recolección del dato "cod_postal"
 		op = 1;
+		System.out.println("FORMATO: El codigo postal consta de caracteres alfanumericos");
+		System.out.println("Ej. 03349");
 		System.out.println("\nIntroduce el cod_postal del paciente: ");
 		cod_postal = sc.nextLine();
 		
@@ -179,6 +197,8 @@ public class EscribeFichero {
 	public static void inPeso() {
 		// Recolección del dato "peso"
 		op = 2;
+		System.out.println("FORMATO: El peso consta de caracteres numericos");
+		System.out.println("Ej. 90");
 		System.out.println("\nIntroduce el peso del paciente: ");
 		peso = sc.nextDouble();
 		
@@ -199,6 +219,8 @@ public class EscribeFichero {
 	public static void inAltura() {
 		// Recolección del dato "altura"
 		op = 2;
+		System.out.println("FORMATO: La altura consta de caracteres numericos y se separan por una coma");
+		System.out.println("Ej. 1,90");
 		System.out.println("\nIntroduce la altura del paciente: ");
 		altura = sc.nextDouble();
 		
@@ -220,6 +242,8 @@ public class EscribeFichero {
 		// Recolección del dato "DNI"
 		op = 2;
 		sc.nextLine(); // Limpiamos el buffer de entrada
+		System.out.println("FORMATO: El DNI contiene 8 caracteres numericos y uno alfabetico al final");
+		System.out.println("Ej. 99999999y");
 		System.out.print("\nIntroduce el DNI del paciente: ");
 		DNI = sc.nextLine();
 		
@@ -306,7 +330,7 @@ public class EscribeFichero {
 		while (op <= 0 || op >2) {
 			System.out.println("\t\t\t  MENU");
 			System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''''");
-			System.out.println("1. Agregar cliente");
+			System.out.println("1. Agregar paciente");
 			System.out.println("2. Nueva visita");
 			System.out.println("");
 			System.out.println("0. Salir");
@@ -334,7 +358,7 @@ public class EscribeFichero {
 			op = 0;
 			while (op <= 0 || op >8 ) {
 				muestraDatosPac();
-				System.out.println("\t\t    AGREGAR CLIENTE");
+				System.out.println("\t\t    AGREGAR PACIENTE");
 				System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 				System.out.println("1. DNI");
 				System.out.println("2. Nombre");
@@ -414,7 +438,7 @@ public class EscribeFichero {
 				System.out.println("2. Peso");
 				System.out.println("3. Altura");
 				System.out.println("4. Calcular IMC");
-				if (DNI != "" && peso != 0 && altura != 0 ) {
+				if (IMC != 0) {
 					System.out.println("5. Guardar");
 				}
 				System.out.println("6. Borrar datos");
@@ -454,7 +478,7 @@ public class EscribeFichero {
 					menu();
 					break;
 				case 5:
-					if (IMC > 0 && peso != 0 && altura != 0) {
+					if (IMC != 0) {
 						System.out.println("Guardando.....");
 						tryCatchVisi();
 						iniciaDatosVis();
@@ -551,13 +575,37 @@ public class EscribeFichero {
 			}
 		}
 	}
-	//---------------------------------------------- Fin 
 	
-	public static void main(String[] args) {
+	// TODO Comentar el código
+	/**
+	 * Método por el cual se comprueba la unicidad del paciente
+	 */
+	public static void compruebaDNI() {
+		try (BufferedReader br = new BufferedReader(new FileReader(rutaPac))) {
+		      String linea;
+
+		      while ((linea = br.readLine()) != null) {
+	
+		        if (linea.contains(DNI)) {
+		          System.err.println("El paciente ya esta registrado");
+		          iniciaDatosPac();
+		          return;
+		        }
+		      }
+
+		      System.out.println("Se procedera a insertar un nuevo paciente");
+		    } catch (IOException e) {
+
+		      System.out.println("Error al leer el archivo: " + rutaPac);
+		      e.printStackTrace();
+		    }
+		  }
+		
+	public static void main(String[] args) throws IOException {
 		iniciaDatosPac();
 		iniciaDatosVis();
-//		muestraDatosPac();
 		menu();
+		
 	}
 	
 }

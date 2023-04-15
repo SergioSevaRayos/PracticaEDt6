@@ -25,8 +25,12 @@ public class LeerFichero {
 		while ((cadena = b.readLine()) != null) {
 			System.out.println(cadena);
 		}
+		if (TratamientoFichero.DNI == b.readLine()) {
+			System.out.println("El DNI existe");
+		}
 		b.close();
 	}
+	
 	public static void main(String[] args) throws IOException {
 		String rutaPacientes = "C:/Users/sergi/git/PracticaEDt6/Pacientes.txt";
 		String rutaVisitas = "C:/Users/sergi/git/PracticaEDt6/Visitas.txt";

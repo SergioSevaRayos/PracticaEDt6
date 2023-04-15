@@ -2,6 +2,8 @@ package practicaT6;
 import java.io.FileWriter;
 import java.util.*;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+
 
 /*
  * Aquí contemplamos una de las opciones a la hora de capturar 
@@ -11,6 +13,7 @@ import java.io.PrintWriter;
  */
 
 // TODO Tengo que configurar la forma de comprobar que la unicidad del "DNI"
+// TODO Tengo que crear la opción de visitas
 
 /**
  * 
@@ -20,23 +23,44 @@ import java.io.PrintWriter;
  */
 public class EscribeFichero {
 	static PrintWriter pw = null;
-	static String ruta = "C:/Users/sergi/git/PracticaEDt6/Pacientes.txt";
+	static String rutaPac = "C:/Users/sergi/git/PracticaEDt6/Pacientes.txt";
+	static String rutaVis = "C:/Users/sergi/git/PracticaEDt6/Visitas.txt";
 	static FileWriter fichero = null;
 	
 	//---------------------------------------------- Inicio 
+	// Variables para gestionar los pacientes
 	static String DNI; // Variable para almacenar el DNI
 	static String nombre; // Variable para almacenar nombre
 	static String edad; // Variable para almacenar la edad
 	static String calle; // Variable para almacenar la calle
 	static String localidad; // Variable para almacenar la localidad
 	static String cod_postal; // Variable para almacenar el código postal
+	
+	// Variables para formato de fecha
+	static  Date fecha = new Date(); // Variable para generar la fecha y la hora
+	static SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy"); // Variable para darle el formato a la fecha
+	static SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss"); // Variable para darle el formato a la hora
+	
+	// Variables para gestionar las visitas
+	static String fechaCons = formatoFecha.format(fecha); // Variable para la fecha
+	static String horaCons = formatoHora.format(fecha); // Variable para almacenar la hora de la consulta 
+	static String h = horaCons;
+	static String f = fechaCons;
+	static double peso; // Variable para almacenar el peso
+	static double altura; // Variable para almacenar la altura
+	static double IMC; // Variable para almacenar el índice de masa corporal
+	static final String kg = "kg"; // Variable para indicar la unidad de medida del peso
+	static final String m = "m"; // Variable para indicar la unidad de medida de la altura
+	
+	
+	// Variables generales
 	static int op = 0; // Variable para la selección de las diferentes opciones
 	static Scanner sc = new Scanner(System.in); // Variable para escanear las diferentes opciones
 	
 	/**
-	 * Método para la introducción del dato "DNI", mediante este método nos aseguramos
-	 * que los datos introducidos son correctos
-	 */
+	* Método para la introducción del dato "DNI", mediante este método nos aseguramos
+	* que los datos introducidos son correctos
+	*/
 	public static void inDNI() {
 		// Recolección del dato "DNI"
 		sc.nextLine(); // Limpiamos el buffer de entrada
@@ -150,9 +174,77 @@ public class EscribeFichero {
 	}
 	
 	/**
+	 * Método para la introducción de la variable "peso"
+	 */
+	public static void inPeso() {
+		// Recolección del dato "peso"
+		op = 2;
+		System.out.println("\nIntroduce el peso del paciente: ");
+		peso = sc.nextDouble();
+		
+		// Mediante esta sentencia nos aseguramos que el peso tiene el formato correcto
+		if (peso != 0) {
+			System.out.println("Peso correcto");
+			menu();
+		}else {
+			System.err.println("Peso incorrecto, vuelve a introducirlo");
+			inPeso();
+		}
+
+	}
+
+	/**
+	 * Método para la introducción de la variable "altura"
+	 */
+	public static void inAltura() {
+		// Recolección del dato "altura"
+		op = 2;
+		System.out.println("\nIntroduce la altura del paciente: ");
+		altura = sc.nextDouble();
+		
+		// Mediante esta sentencia nos aseguramos que la altura tiene el formato correcto
+		if (altura != 0) {
+			System.out.println("Altura correcta");
+			menu();
+		}else {
+			System.err.println("Altura incorrecta, vuelve a introducirla");
+			inAltura();
+		}
+	}
+	
+	/**
+	* Método para la introducción del dato "DNI" en las visitas, mediante este método nos aseguramos
+	* que los datos introducidos son correctos
+	*/
+	public static void inDNIvisita() {
+		// Recolección del dato "DNI"
+		op = 2;
+		sc.nextLine(); // Limpiamos el buffer de entrada
+		System.out.print("\nIntroduce el DNI del paciente: ");
+		DNI = sc.nextLine();
+		
+		// Mediante esta sentencia comprobamos que el "DNI" tiene el formato correcto
+		if (DNI != null && DNI.matches("\\d{8}[A-Za-z]")) {
+			System.out.println("DNI correcto");
+			menu();
+		}else {
+			System.out.print("DNI incorrecto, vuelve a introducirlo: ");
+			inDNIvisita();
+		}
+	}
+	
+	//________________________________________________________________________________________________________
+			private static void calcIMC() {
+				op = 2;
+				IMC = peso / (altura * altura); // Variable para almacenar el índice de masa corporal
+				menu();
+			}
+
+	
+	/**
 	 * Método para preparar las variables para la recolección de datos 
 	 */
-	public static void iniciaDatos() {
+	public static void iniciaDatosPac() {
 		DNI = "";
 		nombre = "";
 		edad = "";
@@ -161,11 +253,24 @@ public class EscribeFichero {
 		cod_postal = "";
 		op = 0;
 	}
+	
+	/**
+	 * Método para preparar las variables para la recolección de datos 
+	 */
+	public static void iniciaDatosVis() {
+		DNI = "";
+		horaCons = "";
+		fechaCons = "";
+		peso = 0;
+		altura = 0;
+		IMC = 0;
+		op = 0;
+	}
 
 	/**
 	 * Método para mostrar los datos que se van agregando
 	 */
-	private static void muestraDatos() {
+	private static void muestraDatosPac() {
 		System.out.println("_______________________________________________________");
 		System.out.println("\t\t\tRESUMEN");
 		System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''''");
@@ -177,6 +282,22 @@ public class EscribeFichero {
 		System.out.println("Codigo postal: " + cod_postal);
 		System.out.println("_______________________________________________________");
 	}
+	
+	/**
+	 * Método para mostrar los datos que se van agregando
+	 */
+	private static void muestraDatosVis() {
+		System.out.println("_______________________________________________________");
+		System.out.println("\t\t\tRESUMEN");
+		System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''''");
+		System.out.println("DNI: " + DNI);
+		System.out.println("Peso: "+ peso + kg);
+		System.out.println("Altura: "+ altura + m);
+		System.out.println("IMC: " + ((double)Math.round(IMC * 100d) / 100d));
+		System.out.println("Hora Consulta: " + h);
+		System.out.println("Fecha consulta: "+ f);
+		System.out.println("_______________________________________________________");
+	}
 
 	/**
 	 * Método a través del cual gestionamos el menú
@@ -186,7 +307,7 @@ public class EscribeFichero {
 			System.out.println("\t\t\t  MENU");
 			System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 			System.out.println("1. Agregar cliente");
-			//System.out.println("2. Nueva visita");
+			System.out.println("2. Nueva visita");
 			System.out.println("");
 			System.out.println("0. Salir");
 			System.out.println("");
@@ -212,7 +333,7 @@ public class EscribeFichero {
 		case 1:
 			op = 0;
 			while (op <= 0 || op >8 ) {
-				muestraDatos();
+				muestraDatosPac();
 				System.out.println("\t\t    AGREGAR CLIENTE");
 				System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''''");
 				System.out.println("1. DNI");
@@ -228,11 +349,19 @@ public class EscribeFichero {
 				System.out.println("");
 				System.out.println("0. Salir");
 				System.out.println("");
+				
+				// Mediante esta sentencia comprobamos que se introduce la opción de forma correcta, y si no, que vuelva introducirla
+				if(sc.hasNextInt()) { 
+				    op = sc.nextInt(); 
+				} else {
+				    sc.next(); 
+				    System.err.println("\nError: Opcion incorrecta");
+				    System.err.println("Error: Vuelve a elegir la opcion");
+				}
 				if (op < 0 || op > 8) {
 					System.err.println("\nError: Opcion incorrecta");
 					System.err.println("Error: Vuelve a elegir la opcion");
 				}
-				op = sc.nextInt();
 				
 				// Aquí se establecen las diferentes opciones de la recolección de datos
 				switch (op) {
@@ -260,8 +389,8 @@ public class EscribeFichero {
 				case 7:
 					if (DNI != "" && nombre != "" && edad != "" && calle != "" && localidad != "" && cod_postal != "") {
 						System.out.println("Guardando.....");
-						tryCatch();
-						iniciaDatos();
+						tryCatchPaci();
+						iniciaDatosPac();
 						menu();
 					}else {
 						System.err.println("ERROR");
@@ -269,26 +398,132 @@ public class EscribeFichero {
 					}
 					break;
 				case 8:
-					iniciaDatos();
+					iniciaDatosPac();
 					System.out.println("Borrando datos....");
 					break;
 				}
 			}
 			
-//		case 2:
-//			menu();
-//			break;
+		case 2:
+			op = 0;
+			while (op <= 0 || op >6 ) {
+				muestraDatosVis();
+				System.out.println("\t\t    AGREGAR VISITA");
+				System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''''");
+				System.out.println("1. DNI");
+				System.out.println("2. Peso");
+				System.out.println("3. Altura");
+				System.out.println("4. Calcular IMC");
+				if (DNI != "" && peso != 0 && altura != 0 ) {
+					System.out.println("5. Guardar");
+				}
+				System.out.println("6. Borrar datos");
+				System.out.println("");
+				System.out.println("0. Salir");
+				System.out.println("");
+				
+				// Mediante esta sentencia comprobamos que se introduce la opción de forma correcta, y si no, que vuelva introducirla
+				if(sc.hasNextInt()) { 
+				    op = sc.nextInt(); 
+				} else {
+				    sc.next(); 
+				    System.err.println("\nError: Opcion incorrecta");
+				    System.err.println("Error: Vuelve a elegir la opcion");
+				}
+				if (op < 0 || op > 6) {
+					System.err.println("\nError: Opcion incorrecta");
+					System.err.println("Error: Vuelve a elegir la opcion");
+				}
+				
+				// Aquí se establecen las diferentes opciones de la recolección de datos
+				switch (op) {
+				case 0:
+					menu();
+					break;
+				case 1:
+					inDNIvisita();
+					break;
+				case 2:
+					inPeso();
+					break;
+				case 3:
+					inAltura();
+					break;
+				case 4:
+					calcIMC();
+					menu();
+					break;
+				case 5:
+					if (IMC > 0 && peso != 0 && altura != 0) {
+						System.out.println("Guardando.....");
+						tryCatchVisi();
+						iniciaDatosVis();
+						menu();
+					}else {
+						System.err.println("ERROR");
+						menu();
+					}
+					break;
+				case 6:
+					iniciaDatosVis();
+					System.out.println("Borrando datos....");
+					break;
+				}
+			}
+			break;
 		}
 	}
 	
-	public static void tryCatch() {
+	/**
+	 * Método por el cual guardamos los datos de los pacientes en un documento .txt
+	 */
+	public static void tryCatchPaci() {
 		try {
 			// Añadir flag a true para no machacar contenido del
-			fichero = new FileWriter(ruta, true);
+			fichero = new FileWriter(rutaPac, true);
 			pw = new PrintWriter(fichero);
 			
 			//---------------------------------------------- Inicio 
-			pw.println(DNI + "," + nombre + "," + edad + "," + calle + "," + localidad + "," + cod_postal);
+			pw.println(DNI + ", " + nombre + ", " + edad + ", " + calle + ", " + localidad + ", " + cod_postal);
+			//---------------------------------------------- Fin   
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				// Nuevamente aprovechamos el finally para
+				// asegurarnos que se cierra el fichero.
+				if (null != fichero) {
+					fichero.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+
+			} finally {
+				try {
+					// Nuevamente aprovechamos el finally para
+					// asegurarnos que se cierra el fichero.
+					if (null != fichero) {
+						fichero.close();
+					}
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Método por el cual guardamos los datos de las consultas en un documento .txt
+	 */
+	public static void tryCatchVisi() {
+		try {
+			// Añadir flag a true para no machacar contenido del
+			fichero = new FileWriter(rutaVis, true);
+			pw = new PrintWriter(fichero);
+			
+			//---------------------------------------------- Inicio 
+			pw.println(DNI + ", " + f + ", " + h + ", " + peso + kg + ", " + altura + m + ", " + ((double)Math.round(IMC * 100d) / 100d));
 			//---------------------------------------------- Fin   
 			
 		} catch (Exception e) {
@@ -319,8 +554,9 @@ public class EscribeFichero {
 	//---------------------------------------------- Fin 
 	
 	public static void main(String[] args) {
-		iniciaDatos();
-		muestraDatos();
+		iniciaDatosPac();
+		iniciaDatosVis();
+//		muestraDatosPac();
 		menu();
 	}
 	

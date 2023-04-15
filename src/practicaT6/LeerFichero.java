@@ -28,7 +28,10 @@ public class LeerFichero {
 		b.close();
 	}
 	public static void main(String[] args) throws IOException {
-		String ruta = "C:/Users/sergi/git/PracticaEDt6/Pacientes.txt";
-		muestraContenido(ruta);
+		String rutaPacientes = "C:/Users/sergi/git/PracticaEDt6/Pacientes.txt";
+		String rutaVisitas = "C:/Users/sergi/git/PracticaEDt6/Visitas.txt";
+		muestraContenido(rutaPacientes);
+		System.out.println("");
+		muestraContenido(rutaVisitas);
 	}
 }

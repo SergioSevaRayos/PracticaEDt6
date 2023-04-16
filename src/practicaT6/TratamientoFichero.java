@@ -190,48 +190,62 @@ public class TratamientoFichero {
 		}
 		menu();
 	}
-	
+
 	/**
 	 * Método para la introducción de la variable "peso"
 	 */
-	public static void inPeso() {
-		// Recolección del dato "peso"
-		op = 2;
-		System.out.println("FORMATO: El peso consta de caracteres numericos");
-		System.out.println("Ej. 90");
-		System.out.println("\nIntroduce el peso del paciente: ");
-		peso = sc.nextDouble();
-		
-		// Mediante esta sentencia nos aseguramos que el peso tiene el formato correcto
-		if (peso != 0) {
-			System.out.println("Peso correcto");
+	public static void inPeso(){
+		// Mediante try/catch nos aseguramos que el programa no se detiene cuando haya un error
+		try {
+			// Recolección del dato "peso"
+			op = 2;
+			System.out.println("FORMATO: El peso consta de caracteres numericos");
+			System.out.println("Ej. 90");
+			System.out.println("\nIntroduce el peso del paciente: ");
+			peso = sc.nextDouble();
+			
+			// Mediante esta sentencia nos aseguramos que el peso tiene el formato correcto
+			if (peso != 0) {
+				System.out.println("Peso correcto");
+				menu();
+			}else {
+				System.err.println("Peso incorrecto, vuelve a introducirlo");
+				inPeso();
+			}
+		} catch (Exception e) {
+			// Vuelve al menú si el programa falla
+			System.err.println("ERROR: El programa ha fallado");
 			menu();
-		}else {
-			System.err.println("Peso incorrecto, vuelve a introducirlo");
-			inPeso();
 		}
-
 	}
-
+	
 	/**
 	 * Método para la introducción de la variable "altura"
 	 */
 	public static void inAltura() {
-		// Recolección del dato "altura"
-		op = 2;
-		System.out.println("FORMATO: La altura consta de caracteres numericos y se separan por una coma");
-		System.out.println("Ej. 1,90");
-		System.out.println("\nIntroduce la altura del paciente: ");
-		altura = sc.nextDouble();
-		
-		// Mediante esta sentencia nos aseguramos que la altura tiene el formato correcto
-		if (altura != 0) {
-			System.out.println("Altura correcta");
+		// Mediante try/catch nos aseguramos que el programa no se detiene cuando haya un error
+		try {
+			// Recolección del dato "altura"
+			op = 2;
+			System.out.println("FORMATO: La altura consta de caracteres numericos y se separan por una coma");
+			System.out.println("Ej. 1,90");
+			System.out.println("\nIntroduce la altura del paciente: ");
+			altura = sc.nextDouble();
+			
+			// Mediante esta sentencia nos aseguramos que la altura tiene el formato correcto
+			if (altura != 0) {
+				System.out.println("Altura correcta");
+				menu();
+			}else {
+				System.err.println("Altura incorrecta, vuelve a introducirla");
+				inAltura();
+			}
+		} catch (Exception e) {
+			// Vuelve al menú si el programa falla
+			System.err.println("ERROR: El programa ha fallado");
 			menu();
-		}else {
-			System.err.println("Altura incorrecta, vuelve a introducirla");
-			inAltura();
 		}
+		
 	}
 	
 	/**
@@ -257,14 +271,22 @@ public class TratamientoFichero {
 		}
 	}
 	
-	//________________________________________________________________________________________________________
-			private static void calcIMC() {
-				op = 2;
-				IMC = peso / (altura * altura); // Variable para almacenar el índice de masa corporal
-				menu();
-			}
+	/**
+	 * Método por el cual se calcula el IMC
+	 */
+	private static void calcIMC() {
+		// Mediante try/catch nos aseguramos que el programa no se detiene cuando haya un error
+		try {
+			op = 2;
+			IMC = peso / (altura * altura); // Variable para almacenar el índice de masa corporal
+			menu();
+		} catch (Exception e) {
+			// Vuelve al menú si el programa falla
+			System.err.println("ERROR: El programa ha fallado");
+			menu();
+		}
+	}
 
-	
 	/**
 	 * Método para preparar las variables para la recolección de datos 
 	 */
@@ -341,13 +363,13 @@ public class TratamientoFichero {
 			    op = sc.nextInt(); 
 			} else {
 			    sc.next(); 
-			    System.err.println("\nError: Opcion incorrecta");
+			    System.err.println("\nError");
 			    System.err.println("Error: Vuelve a elegir la opcion");
 			}
 			
 			// Mediante esta sentencia informamos que la opción elegida no esta dentro del rango
 			if (op < 0 || op > 2) {
-			    System.err.println("\nError: Opcion incorrecta");
+			    System.err.println("\nError");
 			    System.err.println("Error: Vuelve a elegir la opcion");
 			}
 		}
@@ -379,11 +401,11 @@ public class TratamientoFichero {
 				    op = sc.nextInt(); 
 				} else {
 				    sc.next(); 
-				    System.err.println("\nError: Opcion incorrecta");
+				    System.err.println("\nError");
 				    System.err.println("Error: Vuelve a elegir la opcion");
 				}
 				if (op < 0 || op > 8) {
-					System.err.println("\nError: Opcion incorrecta");
+					System.err.println("\nError");
 					System.err.println("Error: Vuelve a elegir la opcion");
 				}
 				
@@ -451,11 +473,11 @@ public class TratamientoFichero {
 				    op = sc.nextInt(); 
 				} else {
 				    sc.next(); 
-				    System.err.println("\nError: Opcion incorrecta");
+				    System.err.println("\nError");
 				    System.err.println("Error: Vuelve a elegir la opcion");
 				}
 				if (op < 0 || op > 6) {
-					System.err.println("\nError: Opcion incorrecta");
+					System.err.println("\nError");
 					System.err.println("Error: Vuelve a elegir la opcion");
 				}
 				
@@ -576,36 +598,39 @@ public class TratamientoFichero {
 		}
 	}
 	
-	// TODO Comentar el código
 	/**
 	 * Método por el cual se comprueba la unicidad del paciente
 	 */
 	public static void compruebaDNI() {
 		try (BufferedReader br = new BufferedReader(new FileReader(rutaPac))) {
 		      String linea;
-
+		      // Bucle para comprobar el DNI
 		      while ((linea = br.readLine()) != null) {
-	
+		    	// Sentencia para idicar que el paciente ya esta registrado
 		        if (linea.contains(DNI)) {
 		          System.err.println("El paciente ya esta registrado");
 		          iniciaDatosPac();
 		          return;
 		        }
 		      }
-
+		      // Indica que el paciente no existe y que se va a proceder a insertarlo
 		      System.out.println("Se procedera a insertar un nuevo paciente");
 		    } catch (IOException e) {
-
-		      System.out.println("Error al leer el archivo: " + rutaPac);
-		      e.printStackTrace();
+		    	// Excepción para indicar que ha habido un error la lectura del fichero
+		    	 System.out.println("Error al leer el archivo: " + rutaPac);
+			     e.printStackTrace();
 		    }
 		  }
-		
-	public static void main(String[] args) throws IOException {
-		iniciaDatosPac();
-		iniciaDatosVis();
-		menu();
-		
-	}
 	
+	/**
+	 * Bucle main que llama a los métodos necesarios para la ejecución del programa
+	 * 
+	 * @param args
+	 * @throws IOException
+	 */
+	public static void main(String[] args) throws IOException {
+		iniciaDatosPac(); // Mestra los datos del paciente
+		iniciaDatosVis(); // Mestra los datos de la visita
+		menu(); // Llama al menú
+	}
 }
